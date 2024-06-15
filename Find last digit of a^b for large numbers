@@ -1,0 +1,28 @@
+class Solution {
+    static int getLastDigit(String a, String b) {
+        // code here
+        // Extract the last digit of the base `a`
+        int lastDigitOfA = a.charAt(a.length() - 1) - '0';
+        
+        // If exponent `b` is "0", the result is always 1
+        if (b.equals("0")) {
+            return 1;
+        }
+        
+        // Calculate the effective exponent by extracting the last two digits of `b`
+        int len = b.length();
+        int lastTwoDigitsOfB = Integer.parseInt(b.substring(Math.max(0, len - 2)));
+        
+        // Modulo 4 to find the position in the cycle (since the pattern repeats every 4)
+        int effectiveExponent = lastTwoDigitsOfB % 4;
+        if (effectiveExponent == 0) {
+            effectiveExponent = 4; // To handle cases where the modulus operation results in 0
+        }
+        
+        // Calculate the last digit of (lastDigitOfA ^ effectiveExponent)
+        int result = (int) Math.pow(lastDigitOfA, effectiveExponent) % 10;
+        
+        return result;
+
+    }
+};
